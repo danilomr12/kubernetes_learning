@@ -6,7 +6,7 @@ spec: # especificação do recurso
   selector: # seletor para identificar os pods que serão gerenciados pelo deployment
     matchLabels: # labels que identificam os pods que serão gerenciados pelo deployment
       app: nginx # label que identifica o app que será gerenciado pelo deployment
-  replicas: 3 # quantidade de réplicas do deployment
+  replicas: 6 # quantidade de réplicas do deployment
   template: # template do deployment
     metadata: # metadados do template
       labels: # labels do template
@@ -18,6 +18,10 @@ spec: # especificação do recurso
       containers: # containers do template 
         - name: nginx # nome do container
           image: nginx:1.19.1 # imagem do container do Nginx
+          resources: # recursos do container
+            limits: # limites de recursos
+              memory: 100Mi # limite de memória
+              cpu: 0.2 # limite de CPU
           ports: # portas do container
             - containerPort: 80 # porta do container
               name: http # nome da porta
@@ -31,8 +35,8 @@ spec: # especificação do recurso
             - '-nginx.scrape-uri=http://localhost/metrics' # argumento para definir a URI de scraping
           resources: # recursos do container
             limits: # limites de recursos
-              memory: 128Mi # limite de memória
-              cpu: 0.3 # limite de CPU
+              memory: 100Mi # limite de memória
+              cpu: 0.2 # limite de CPU
           ports: # portas do container
             - containerPort: 9113 # porta do container que será exposta
               name: metrics # nome da porta
