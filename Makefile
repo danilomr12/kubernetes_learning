@@ -15,6 +15,9 @@ deploy-argocd:
 	kubectl apply -n argocd -f argocd/argo-deployment.yaml
 	kubectl get all -n argocd
 
+argocd-get-all:
+	kubectl get all -n argocd
+
 install-argocd-cli:
 	curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
 	sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
@@ -22,14 +25,14 @@ install-argocd-cli:
 	argocd version
 
 expose-argocd:
-	@echo "argocd initial password is:\n---------------------${ARGO_PASSWORD}""
+	@echo "argocd initial password is:\n---------------------${ARGO_PASSWORD}"
 	@echo "\n---------------------"
 	kubectl port-forward svc/argocd-server -n argocd ${ARGOCD_PORT}:443
 
 endpoints:
 	kubectl get -n default endpoints
 
-argocd-add-cluster: expose-argocd
+argocd-add-cluster:
 	argocd login localhost:${ARGOCD_PORT} 
 	@echo "Adding cluster ${CLUSTER_NAME} to argocd"
 	argocd cluster add ${CLUSTER_NAME}
