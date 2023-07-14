@@ -2,8 +2,8 @@ apiVersion: v1 # versão da API do Kubernetes
 kind: Pod # tipo do objeto que estamos criando
 metadata: # metadados do Pod 
   name: giropops # nome do Pod que estamos criando
-labels: # labels do Pod
-  run: giropops # label run com o valor giropops
+  labels: # labels do Pod
+    run: giropops # label run com o valor giropops
 spec: # especificação do Pod
   containers: # containers que estão dentro do Pod
   - name: girus # nome do container
@@ -15,3 +15,15 @@ spec: # especificação do Pod
     args:
     - sleep
     - "1800"
+  - name: ubu # nome do container
+    image: ubuntu
+    args:
+      - sleep
+      - infinity
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "0.5"
+      requests:
+        memory: "64Mi"
+        cpu: "0.3"
