@@ -45,3 +45,8 @@ argocd-add-app:
 	argocd cluster list 
 	@echo "adding app to argocd"
 	argocd app create nginx-app --repo https://github.com/danilomr12/kubernetes_learning.git --path ./argocd/argo-repo/ --dest-server https://172.21.0.2:6443 --dest-namespace default
+
+build-n-push-my-custom-nginx:
+	docker build -f secrets/Dockerfile . --tag danilomr12/my-custom-nginx:0.1
+	docker login
+	docker push danilomr12/my-custom-nginx:0.1
