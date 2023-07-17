@@ -50,3 +50,9 @@ build-n-push-my-custom-nginx:
 	docker build -f secrets/Dockerfile . --tag danilomr12/my-custom-nginx:0.1
 	docker login
 	docker push danilomr12/my-custom-nginx:0.1
+
+create-tls-cert:
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate.crt
+
+create-secret-tls: 
+	kubectl create secret tls meu-servico-web-tls-secret --cert=certificate.crt --key=private.key
